@@ -328,18 +328,18 @@ class Game {
 
   /**
    * Automatically detects the user's browser language.
-   * If the language is supported by the game, it returns it; otherwise, defaults to Russian.
+   * If the language is supported by the game, it returns it; otherwise, defaults to English.
    */
   detectUserLanguage() {
     try {
-      const userLang = (navigator.language || navigator.userLanguage || "ru").split("-")[0].toLowerCase();
+      const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0].toLowerCase();
       if (LANGUAGE_DATA[userLang]) {
         return userLang;
       }
     } catch (e) {
       console.warn("Could not detect user language, falling back to default:", e);
     }
-    return "ru"; // Standard default fallback
+    return "en"; // Standard default fallback
   }
 
   /**
