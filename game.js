@@ -683,9 +683,18 @@ class Game {
         keyBtn.innerText = char;
         keyBtn.id = `vkey-${char}`;
 
-        // Handle Touch interactions
+        let lastTouchTime = 0;
         const pressHandler = (e) => {
-          e.preventDefault();
+          if (e.type === "mousedown" && Date.now() - lastTouchTime < 500) {
+            return;
+          }
+          if (e.type === "touchstart") {
+            lastTouchTime = Date.now();
+          }
+
+          if (e.cancelable) {
+            e.preventDefault();
+          }
           keyBtn.classList.add("pressed");
           if (this.state === "playing") {
             this.handleInputKey(char);
