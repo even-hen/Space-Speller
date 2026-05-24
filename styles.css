@@ -84,6 +84,7 @@
 body {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background-color: #000;
   display: flex;
@@ -132,7 +133,7 @@ body {
    ========================================================================== */
 #keyboard-container {
   width: 100%;
-  padding: 10px 6px 16px 6px;
+  padding: 10px 6px calc(16px + env(safe-area-inset-bottom, 0px)) 6px;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
