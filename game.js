@@ -269,7 +269,7 @@ class Game {
     this.state = "start";
     
     // Configurations
-    this.theme = "retro";
+    this.theme = "neon";
     this.lang = "ru";
     this.mode = "practice"; // 'practice' or 'arcade'
     
