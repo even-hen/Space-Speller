@@ -270,7 +270,7 @@ class Game {
     
     // Configurations
     this.theme = "neon";
-    this.lang = "ru";
+    this.lang = this.detectUserLanguage();
     this.mode = "practice"; // 'practice' or 'arcade'
     
     // Gameplay variables
@@ -324,6 +324,22 @@ class Game {
 
     // Start game rendering loop
     requestAnimationFrame((t) => this.loop(t));
+  }
+
+  /**
+   * Automatically detects the user's browser language.
+   * If the language is supported by the game, it returns it; otherwise, defaults to Russian.
+   */
+  detectUserLanguage() {
+    try {
+      const userLang = (navigator.language || navigator.userLanguage || "ru").split("-")[0].toLowerCase();
+      if (LANGUAGE_DATA[userLang]) {
+        return userLang;
+      }
+    } catch (e) {
+      console.warn("Could not detect user language, falling back to default:", e);
+    }
+    return "ru"; // Standard default fallback
   }
 
   /**
@@ -563,9 +579,11 @@ class Game {
     if (!LANGUAGE_DATA[langCode]) return;
     this.lang = langCode;
     
-    // Clear typing locked target when changing language mid-game to prevent crashes
+    // Clear typing locked target, words and lasers on screen when changing language mid-game
     this.typingTarget = null;
     this.typedBuffer = "";
+    this.asteroids = [];
+    this.lasers = [];
 
     this.translateUI();
     this.buildVirtualKeyboard();
