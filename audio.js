@@ -310,12 +310,11 @@ class AudioEngine {
     osc.connect(gainNode);
     gainNode.connect(this.ctx.destination);
 
-    // As requested: a very clean and soft triangle wave smoothly falling from 250 Hz to 140 Hz
     osc.type = "triangle";
-    osc.frequency.setValueAtTime(250, this.ctx.currentTime); 
-    osc.frequency.linearRampToValueAtTime(140, this.ctx.currentTime + 0.15); // Descending sweep
+    osc.frequency.setValueAtTime(200, this.ctx.currentTime); // G3
+    osc.frequency.linearRampToValueAtTime(100, this.ctx.currentTime + 0.15); // Descending sweep
 
-    gainNode.gain.setValueAtTime(0.15, this.ctx.currentTime); // Soft volume
+    gainNode.gain.setValueAtTime(0.12, this.ctx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
 
     osc.start(this.ctx.currentTime);
