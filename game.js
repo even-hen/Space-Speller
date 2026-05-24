@@ -33,8 +33,8 @@ const TRANSLATIONS = {
     restartBtn: "ИГРАТЬ СНОВА 🔄",
     voiceOn: "Вкл",
     voiceOff: "Выкл",
-    practiceName: "📚 Обучение",
-    arcadeName: "💥 Испытание",
+    practiceName: "📚 Практика",
+    arcadeName: "🚀 Аркада",
     themeNeon: "Неон 🌌",
     themeCartoon: "Мультик 🧸",
     themeRetro: "Ретро 📟",
@@ -71,7 +71,7 @@ const TRANSLATIONS = {
     voiceOn: "On",
     voiceOff: "Off",
     practiceName: "📚 Practice",
-    arcadeName: "💥 Arcade",
+    arcadeName: "🚀 Arcade",
     themeNeon: "Neon 🌌",
     themeCartoon: "Cartoon 🧸",
     themeRetro: "Retro 📟",
@@ -108,7 +108,7 @@ const TRANSLATIONS = {
     voiceOn: "Sí",
     voiceOff: "No",
     practiceName: "📚 Práctica",
-    arcadeName: "💥 Desafío",
+    arcadeName: "🚀 Arcade",
     themeNeon: "Neón 🌌",
     themeCartoon: "Dibujos 🧸",
     themeRetro: "Retro 📟",
@@ -144,8 +144,8 @@ const TRANSLATIONS = {
     restartBtn: "NOCHMAL SPIELEN 🔄",
     voiceOn: "An",
     voiceOff: "Aus",
-    practiceName: "📚 Lernen",
-    arcadeName: "💥 Arcade",
+    practiceName: "📚 Üben",
+    arcadeName: "🚀 Arcade",
     themeNeon: "Neon 🌌",
     themeCartoon: "Cartoon 🧸",
     themeRetro: "Retro 📟",
@@ -181,8 +181,8 @@ const TRANSLATIONS = {
     restartBtn: "REJOUER 🔄",
     voiceOn: "Oui",
     voiceOff: "Non",
-    practiceName: "📚 Apprentissage",
-    arcadeName: "💥 Arcade",
+    practiceName: "📚 Entraînement",
+    arcadeName: "🚀 Arcade",
     themeNeon: "Néon 🌌",
     themeCartoon: "Dessin 🧸",
     themeRetro: "Rétro 📟",
@@ -219,7 +219,7 @@ const TRANSLATIONS = {
     voiceOn: "Sì",
     voiceOff: "No",
     practiceName: "📚 Allenamento",
-    arcadeName: "💥 Arcade",
+    arcadeName: "🚀 Arcade",
     themeNeon: "Neon 🌌",
     themeCartoon: "Fumetto 🧸",
     themeRetro: "Retro 📟",
@@ -901,9 +901,8 @@ class Game {
       }
     }
 
-    // Update Score
-    const pointValues = { 1: 10, 2: 25, 3: 50, 4: 75, 5: 100, 6: 125, 7: 150 };
-    const pointsGained = (pointValues[this.level] || 150) * (this.mode === "arcade" ? 1 : 0);
+    // Update Score: 1 point per letter in Arcade mode
+    const pointsGained = ast.text.length * (this.mode === "arcade" ? 1 : 0);
     this.score += pointsGained;
     document.getElementById("score-val").innerText = String(this.score).padStart(4, "0");
 
