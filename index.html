@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <!-- Ensure mobile scaling fits viewport without scrolling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Astroblast: Космическая Азбука / Space Spelling</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-retro">
+
+  <!-- Main Game Frame (mobile proportional viewport wrapper) -->
+  <div id="game-container">
+    
+    <!-- CRT monitor screen scanlines & curve simulation for Theme C (Retro Vector) -->
+    <div id="crt-overlay"></div>
+
+    <!-- 1. HUD Dashboard -->
+    <div id="hud-overlay">
+      <!-- Level -->
+      <div class="hud-item" id="hud-level-panel">
+        <span class="hud-label" id="lbl-level">Уровень</span>
+        <span class="hud-value" id="level-val">1</span>
+      </div>
+
+      <!-- Scoreboard -->
+      <div class="hud-item" id="hud-score-panel">
+        <span class="hud-label" id="lbl-score">Очки</span>
+        <span class="hud-value" id="score-val">0000</span>
+      </div>
+
+      <!-- Shield / Energy / Health -->
+      <div class="hud-item" id="hud-shield-panel">
+        <span class="hud-label" id="lbl-shield">Щит</span>
+        <div class="shield-container">
+          <div class="shield-bar" id="shield-bar"></div>
+        </div>
+      </div>
+
+      <!-- HUD Controls (Menu gear) -->
+      <div id="hud-controls">
+        <button class="circle-btn" id="btn-settings-gear" title="Open Settings" aria-label="Settings">
+          <svg viewBox="0 0 16 16" class="gear-icon">
+            <!-- Outer teeth -->
+            <rect x="7" y="0" width="2" height="2" fill="currentColor"/>
+            <rect x="7" y="14" width="2" height="2" fill="currentColor"/>
+            <rect x="0" y="7" width="2" height="2" fill="currentColor"/>
+            <rect x="14" y="7" width="2" height="2" fill="currentColor"/>
+            <!-- Diagonal teeth -->
+            <rect x="2" y="2" width="2" height="2" fill="currentColor"/>
+            <rect x="12" y="2" width="2" height="2" fill="currentColor"/>
+            <rect x="2" y="12" width="2" height="2" fill="currentColor"/>
+            <rect x="12" y="12" width="2" height="2" fill="currentColor"/>
+            <!-- Core Ring -->
+            <path d="M 5,3 h 6 v 2 h 2 v 2 h 1 v 2 h -1 v 2 h -2 v 2 h -6 v -2 h -2 v -2 h -1 v -2 h 1 v -2 h 2 z M 6,6 v 4 h 4 v -4 z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. Interactive Game Canvas -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- 3. Virtual Spaceship Keyboard Panel -->
+    <div id="keyboard-container">
+      <!-- Rows will be injected dynamically via JavaScript to match layout of selected language -->
+    </div>
+
+    <!-- ==========================================
+         OVERLAY SCREENS
+         ========================================== -->
+
+    <!-- Screen A: Start Menu -->
+    <div id="start-screen" class="overlay-screen visible">
+      <div class="screen-card">
+        <h1 class="screen-title" id="start-title">КОСМОСПАСАТЕЛЬ</h1>
+        <p class="screen-subtitle" id="start-subtitle">
+          Защити космическую базу! Сбивай астероиды, нажимая буквы на клавиатуре. Учи алфавит весело!
+        </p>
+        
+        <div class="settings-group">
+          <!-- Quick Lang Segment -->
+          <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 8px;">
+            <span class="settings-label" id="start-lbl-lang">Выберите язык:</span>
+            <div class="segmented-control" id="start-lang-control">
+              <!-- JS Injected language segments -->
+            </div>
+          </div>
+          
+          <!-- Quick Mode Segment -->
+          <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 8px;">
+            <span class="settings-label" id="start-lbl-mode">Режим игры:</span>
+            <div class="segmented-control" id="start-mode-control">
+              <button class="segment-btn active" data-mode="practice" id="start-btn-practice">📚 Практика (без проигрыша)</button>
+              <button class="segment-btn" data-mode="arcade" id="start-btn-arcade">🚀 Аркада (на очки)</button>
+            </div>
+          </div>
+
+          <!-- Start Theme Segment -->
+          <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 8px;">
+            <span class="settings-label" id="start-lbl-theme">Оформление:</span>
+            <div class="segmented-control" id="start-theme-control">
+              <button class="segment-btn active" data-theme="retro" id="start-theme-retro">Ретро 📟</button>
+              <button class="segment-btn" data-theme="neon" id="start-theme-neon">Неон 🌌</button>
+              <button class="segment-btn" data-theme="cartoon" id="start-theme-cartoon">Мультик 🧸</button>
+            </div>
+          </div>
+
+          <!-- Starting Level Segment -->
+          <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 8px;">
+            <span class="settings-label" id="start-lbl-level-select">Стартовый уровень:</span>
+            <div class="segmented-control" id="start-level-control">
+              <button class="segment-btn active" data-level="1">1</button>
+              <button class="segment-btn" data-level="2">2</button>
+              <button class="segment-btn" data-level="3">3</button>
+              <button class="segment-btn" data-level="4">4</button>
+              <button class="segment-btn" data-level="5">5</button>
+              <button class="segment-btn" data-level="6">6</button>
+              <button class="segment-btn" data-level="7">7</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="action-btn" id="btn-start-game">ПОЛЕТЕЛИ! 🚀</button>
+      </div>
+    </div>
+
+    <!-- Screen B: Dynamic Settings Panel -->
+    <div id="settings-screen" class="overlay-screen">
+      <div class="screen-card">
+        <h2 class="screen-title" id="sett-title">Настройки</h2>
+        
+        <div class="settings-group">
+          <!-- Theme Selection Segment -->
+          <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 4px;">
+            <span class="settings-label" id="sett-lbl-theme">Оформление:</span>
+            <div class="segmented-control" id="sett-theme-control">
+              <button class="segment-btn active" data-theme="retro" id="sett-theme-retro">Ретро 📟</button>
+              <button class="segment-btn" data-theme="neon" id="sett-theme-neon">Неон 🌌</button>
+              <button class="segment-btn" data-theme="cartoon" id="sett-theme-cartoon">Мультик 🧸</button>
+            </div>
+          </div>
+
+          <!-- Language Selection Segment -->
+          <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 4px;">
+            <span class="settings-label" id="sett-lbl-lang">Язык обучения:</span>
+            <div class="segmented-control" id="sett-lang-control">
+              <!-- JS Injected language segments -->
+            </div>
+          </div>
+
+          <!-- Mode Selection Segment -->
+          <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 4px;">
+            <span class="settings-label" id="sett-lbl-mode">Режим:</span>
+            <div class="segmented-control" id="sett-mode-control">
+              <button class="segment-btn" data-mode="practice" id="sett-btn-practice">📚 Обучение</button>
+              <button class="segment-btn" data-mode="arcade" id="sett-btn-arcade">💥 Испытание</button>
+            </div>
+          </div>
+
+          <!-- Starting Level Segment -->
+          <div class="settings-row" style="flex-direction: column; align-items: stretch; gap: 4px;">
+            <span class="settings-label" id="sett-lbl-level-select">Начальный уровень:</span>
+            <div class="segmented-control" id="sett-level-control">
+              <button class="segment-btn active" data-level="1">1</button>
+              <button class="segment-btn" data-level="2">2</button>
+              <button class="segment-btn" data-level="3">3</button>
+              <button class="segment-btn" data-level="4">4</button>
+              <button class="segment-btn" data-level="5">5</button>
+              <button class="segment-btn" data-level="6">6</button>
+              <button class="segment-btn" data-level="7">7</button>
+            </div>
+          </div>
+
+          <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.15); margin: 6px 0;">
+
+          <!-- Sound Effects Switch -->
+          <div class="settings-row">
+            <span class="settings-label" id="sett-lbl-sound">Звуковые эффекты:</span>
+            <div class="segmented-control" id="sett-sound-control" style="width: auto; margin: 0;">
+              <button class="segment-btn active" data-sound="on" id="sett-btn-sound-on">Вкл</button>
+              <button class="segment-btn" data-sound="off" id="sett-btn-sound-off">Выкл</button>
+            </div>
+          </div>
+
+          <!-- Voice Pronunciation Switch -->
+          <div class="settings-row">
+            <span class="settings-label" id="sett-lbl-voice">Озвучка букв:</span>
+            <div class="segmented-control" id="sett-voice-control" style="width: auto; margin: 0;">
+              <button class="segment-btn active" data-voice="on" id="sett-btn-voice-on">Вкл</button>
+              <button class="segment-btn" data-voice="off" id="sett-btn-voice-off">Выкл</button>
+            </div>
+          </div>
+
+          <!-- Voice Speed Range Slider -->
+          <div class="settings-row">
+            <span class="settings-label" id="sett-lbl-speed">Скорость речи:</span>
+            <input type="range" id="sett-speech-speed" min="0.5" max="1.5" step="0.1" value="1.0">
+          </div>
+        </div>
+
+        <button class="action-btn" id="btn-save-settings">Закрыть ⚙️</button>
+      </div>
+    </div>
+
+    <!-- Screen C: Game Over Panel -->
+    <div id="game-over-screen" class="overlay-screen">
+      <div class="screen-card">
+        <h2 class="screen-title" id="go-title">КОНЕЦ ИГРЫ</h2>
+        <p class="screen-subtitle" id="go-subtitle">Защитный щит полностью разряжен!</p>
+        
+        <div style="background: rgba(255,255,255,0.05); padding: 16px; border-radius: 8px;">
+          <div class="settings-row" style="margin-bottom: 8px;">
+            <span id="go-lbl-reached-score">Набранные очки:</span>
+            <span class="hud-value" id="go-score-val" style="color: var(--accent-color);">0000</span>
+          </div>
+          <div class="settings-row">
+            <span id="go-lbl-reached-level">Максимальный уровень:</span>
+            <span class="hud-value" id="go-level-val" style="color: var(--accent-secondary);">1</span>
+          </div>
+        </div>
+
+        <button class="action-btn" id="btn-restart-game">ИГРАТЬ СНОВА 🔄</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Loading game assets -->
+  <script src="words.js"></script>
+  <script src="audio.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
