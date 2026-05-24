@@ -669,7 +669,7 @@ class Game {
       this.typedBuffer = "";
       this.asteroids = [];
       this.lasers = [];
-      this.spawnInterval = Math.max(2600, 3300 - this.level * 100);
+      this.spawnInterval = Math.max(3000, 3500 - this.level * 100);
     }
   }
 
@@ -807,6 +807,7 @@ class Game {
       } else {
         // Input matches nothing, trigger brief visual vibration or ignore
         this.flashVirtualKey(char, true);
+        audio.playError();
       }
     } else {
       // Locked target exists: Check if input matches the NEXT character in spelling sequence
@@ -829,6 +830,7 @@ class Game {
         this.typedBuffer = "";
         this.typingTarget = null;
         this.flashVirtualKey(char, true);
+        audio.playError();
       }
     }
   }
@@ -967,7 +969,7 @@ class Game {
     this.typedBuffer = "";
 
     // Adjust difficulty curves: increase spawn speed (gentler progression for kids)
-    this.spawnInterval = Math.max(2600, 3300 - this.level * 100);
+    this.spawnInterval = Math.max(3000, 3500 - this.level * 100);
   }
 
   /**
@@ -982,7 +984,7 @@ class Game {
     const y = -radius;
 
     // Speed curve scales up with levels (gentler progression for kids)
-    const baseSpeed = 0.4 + this.level * 0.07;
+    const baseSpeed = 0.4 + this.level * 0.04;
     const vy = Math.random() * 0.3 + baseSpeed;
 
     let astColor = "#33ff33";
@@ -1110,7 +1112,7 @@ class Game {
     this.score = 0;
     this.level = this.startLevel; // Load starting level chosen by user
     this.shield = 100;
-    this.spawnInterval = Math.max(1200, 3200 - this.level * 300);
+    this.spawnInterval = Math.max(3000, 3500 - this.level * 100);
     this.levelUpBannerTimer = 0;
     this.slowMotionFactor = 1.0;
     
@@ -1213,8 +1215,8 @@ class Game {
     // Apply slow motion factors
     const delta = elapsed * this.slowMotionFactor;
 
-    // 1. Spawning
-    this.spawnTimer += delta;
+    // 1. Spawning (slowed down quadratically during time dilation to prevent overwhelming)
+    this.spawnTimer += delta * this.slowMotionFactor;
     if (this.spawnTimer >= this.spawnInterval) {
       this.spawnTimer = 0;
       if (this.asteroids.length < 5) {
