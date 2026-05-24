@@ -519,6 +519,14 @@ class Game {
     document.getElementById("start-btn-practice").innerText = dict.practiceMode;
     document.getElementById("start-btn-arcade").innerText = dict.arcadeMode;
     document.getElementById("btn-start-game").innerText = dict.playBtn;
+    
+    // Start Screen Themes
+    const startThemeRetro = document.getElementById("start-theme-retro");
+    if (startThemeRetro) startThemeRetro.innerText = dict.themeRetro;
+    const startThemeNeon = document.getElementById("start-theme-neon");
+    if (startThemeNeon) startThemeNeon.innerText = dict.themeNeon;
+    const startThemeCartoon = document.getElementById("start-theme-cartoon");
+    if (startThemeCartoon) startThemeCartoon.innerText = dict.themeCartoon;
 
     // Settings Screen
     document.getElementById("sett-title").innerText = dict.settTitle;
@@ -535,6 +543,14 @@ class Game {
     document.getElementById("sett-btn-practice").innerText = dict.practiceName;
     document.getElementById("sett-btn-arcade").innerText = dict.arcadeName;
     document.getElementById("btn-save-settings").innerText = dict.settClose;
+
+    // Settings Screen Themes
+    const settThemeRetro = document.getElementById("sett-theme-retro");
+    if (settThemeRetro) settThemeRetro.innerText = dict.themeRetro;
+    const settThemeNeon = document.getElementById("sett-theme-neon");
+    if (settThemeNeon) settThemeNeon.innerText = dict.themeNeon;
+    const settThemeCartoon = document.getElementById("sett-theme-cartoon");
+    if (settThemeCartoon) settThemeCartoon.innerText = dict.themeCartoon;
 
     // Game Over
     document.getElementById("go-title").innerText = dict.goTitle;
