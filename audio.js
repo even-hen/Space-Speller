@@ -298,6 +298,32 @@ class AudioEngine {
   }
 
   /**
+   * Plays a gentle, descending error buzz (triangle-wave sweep).
+   */
+  playError() {
+    if (!this.soundEnabled) return;
+    this.initContext();
+
+    const osc = this.ctx.createOscillator();
+    const gainNode = this.ctx.createGain();
+
+    osc.connect(gainNode);
+    gainNode.connect(this.ctx.destination);
+
+    // Sawtooth has rich high-frequency harmonics, making it perfectly audible 
+    // even on tiny mobile phone speakers where low frequencies are filtered out.
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(320, this.ctx.currentTime); 
+    osc.frequency.linearRampToValueAtTime(140, this.ctx.currentTime + 0.15); // Descending sweep
+
+    gainNode.gain.setValueAtTime(0.05, this.ctx.currentTime); // Kept very quiet so it is not annoying
+    gainNode.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+
+    osc.start(this.ctx.currentTime);
+    osc.stop(this.ctx.currentTime + 0.15);
+  }
+
+  /**
    * Toggles sound effects on/off.
    */
   toggleSound(enabled) {
