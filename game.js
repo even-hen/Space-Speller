@@ -669,7 +669,7 @@ class Game {
       this.typedBuffer = "";
       this.asteroids = [];
       this.lasers = [];
-      this.spawnInterval = Math.max(3000, 3500 - this.level * 100);
+      this.spawnInterval = Math.max(2000, 3200 - this.level * 150);
     }
   }
 
@@ -969,7 +969,7 @@ class Game {
     this.typedBuffer = "";
 
     // Adjust difficulty curves: increase spawn speed (gentler progression for kids)
-    this.spawnInterval = Math.max(3000, 3500 - this.level * 100);
+    this.spawnInterval = Math.max(2000, 3200 - this.level * 150);
   }
 
   /**
@@ -984,7 +984,7 @@ class Game {
     const y = -radius;
 
     // Speed curve scales up with levels (gentler progression for kids)
-    const baseSpeed = 0.4 + this.level * 0.04;
+    const baseSpeed = 0.4 + this.level * 0.055;
     const vy = Math.random() * 0.3 + baseSpeed;
 
     let astColor = "#33ff33";
@@ -1112,7 +1112,7 @@ class Game {
     this.score = 0;
     this.level = this.startLevel; // Load starting level chosen by user
     this.shield = 100;
-    this.spawnInterval = Math.max(3000, 3500 - this.level * 100);
+    this.spawnInterval = Math.max(2000, 3200 - this.level * 150);
     this.levelUpBannerTimer = 0;
     this.slowMotionFactor = 1.0;
     
