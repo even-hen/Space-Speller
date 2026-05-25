@@ -425,9 +425,11 @@ class Game {
 
     // Speech slider adjustments
     const speechSlider = document.getElementById("sett-speech-speed");
-    speechSlider.addEventListener("input", (e) => {
-      audio.setSpeechRate(parseFloat(e.target.value));
-    });
+    if (speechSlider) {
+      speechSlider.addEventListener("input", (e) => {
+        audio.setSpeechRate(parseFloat(e.target.value));
+      });
+    }
 
     // Speech volume adjustments
     const speechVolumeSlider = document.getElementById("sett-speech-volume");
@@ -587,7 +589,8 @@ class Game {
     document.getElementById("sett-lbl-mode").innerText = dict.settLblMode;
     document.getElementById("sett-lbl-sound").innerText = dict.settLblSound;
     document.getElementById("sett-lbl-voice").innerText = dict.settLblVoice;
-    document.getElementById("sett-lbl-speed").innerText = dict.settLblSpeed;
+    const settSpeedEl = document.getElementById("sett-lbl-speed");
+    if (settSpeedEl) settSpeedEl.innerText = dict.settLblSpeed;
     const settVolumeEl = document.getElementById("sett-lbl-volume");
     if (settVolumeEl) settVolumeEl.innerText = dict.settLblVolume;
     document.getElementById("sett-btn-sound-on").innerText = dict.voiceOn;

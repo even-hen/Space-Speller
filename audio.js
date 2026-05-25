@@ -10,7 +10,7 @@ class AudioEngine {
     this.voices = [];
     this.speechRate = 1.0; // Average speech speed by default
     this.speechPitch = 1.0;
-    this.speechVolume = 0.8; // Default pronunciation volume set to 0.8
+    this.speechVolume = 0.7; // Default pronunciation volume set to 0.7
     this.soundEnabled = true;
     this.voiceEnabled = true;
 
@@ -137,7 +137,7 @@ class AudioEngine {
     osc.frequency.setValueAtTime(880, this.ctx.currentTime); // Start pitch
     osc.frequency.exponentialRampToValueAtTime(150, this.ctx.currentTime + 0.15); // End sweep
 
-    gainNode.gain.setValueAtTime(0.15, this.ctx.currentTime);
+    gainNode.gain.setValueAtTime(0.14, this.ctx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.15);
 
     osc.start(this.ctx.currentTime);
@@ -314,10 +314,10 @@ class AudioEngine {
     gainNode.connect(this.ctx.destination);
 
     osc.type = "triangle";
-    osc.frequency.setValueAtTime(200, this.ctx.currentTime); // G3
-    osc.frequency.linearRampToValueAtTime(100, this.ctx.currentTime + 0.15); // Descending sweep
+    osc.frequency.setValueAtTime(220, this.ctx.currentTime); 
+    osc.frequency.linearRampToValueAtTime(120, this.ctx.currentTime + 0.15); // Descending sweep
 
-    gainNode.gain.setValueAtTime(0.12, this.ctx.currentTime);
+    gainNode.gain.setValueAtTime(0.13, this.ctx.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
 
     osc.start(this.ctx.currentTime);
