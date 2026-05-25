@@ -1184,14 +1184,69 @@ class Game {
 
   openSettings() {
     this.state = "settings";
+    
+    // Sync speech speed slider
     const speechSlider = document.getElementById("sett-speech-speed");
     if (speechSlider) {
       speechSlider.value = audio.speechRate;
     }
+    
+    // Sync speech volume slider
     const speechVolumeSlider = document.getElementById("sett-speech-volume");
     if (speechVolumeSlider) {
       speechVolumeSlider.value = audio.speechVolume;
     }
+    
+    // Sync theme buttons active state
+    document.querySelectorAll("#sett-theme-control button").forEach(btn => {
+      if (btn.getAttribute("data-theme") === this.theme) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+
+    // Sync language buttons active state
+    this.renderLanguageControls();
+
+    // Sync game mode buttons active state
+    document.querySelectorAll("#sett-mode-control button").forEach(btn => {
+      if (btn.getAttribute("data-mode") === this.mode) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+
+    // Sync starting level buttons active state
+    document.querySelectorAll("#sett-level-control button").forEach(btn => {
+      if (parseInt(btn.getAttribute("data-level")) === this.level) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+
+    // Sync sound effects buttons active state
+    document.querySelectorAll("#sett-sound-control button").forEach(btn => {
+      const active = (btn.getAttribute("data-sound") === "on") === audio.soundEnabled;
+      if (active) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+
+    // Sync voice speech buttons active state
+    document.querySelectorAll("#sett-voice-control button").forEach(btn => {
+      const active = (btn.getAttribute("data-voice") === "on") === audio.voiceEnabled;
+      if (active) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
+      }
+    });
+
     document.getElementById("settings-screen").classList.add("visible");
   }
 
