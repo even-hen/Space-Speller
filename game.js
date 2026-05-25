@@ -25,6 +25,7 @@ const TRANSLATIONS = {
     settLblSound: "Звуковые эффекты:",
     settLblVoice: "Озвучка букв:",
     settLblSpeed: "Скорость речи:",
+    settLblVolume: "Громкость речи:",
     settClose: "Сохранить ⚙️",
     goTitle: "КОНЕЦ ИГРЫ",
     goSubtitle: "Защитный щит полностью разряжен!",
@@ -62,6 +63,7 @@ const TRANSLATIONS = {
     settLblSound: "Sound Effects:",
     settLblVoice: "Voice Speech:",
     settLblSpeed: "Speech Speed:",
+    settLblVolume: "Speech Volume:",
     settClose: "Save & Close ⚙️",
     goTitle: "GAME OVER",
     goSubtitle: "The protective shield is fully depleted!",
@@ -99,6 +101,7 @@ const TRANSLATIONS = {
     settLblSound: "Efectos de sonido:",
     settLblVoice: "Pronunciación:",
     settLblSpeed: "Velocidad de voz:",
+    settLblVolume: "Volumen de voz:",
     settClose: "Guardar ⚙️",
     goTitle: "FIN DEL JUEGO",
     goSubtitle: "¡El escudo protector se ha agotado por completo!",
@@ -136,6 +139,7 @@ const TRANSLATIONS = {
     settLblSound: "Soundeffekte:",
     settLblVoice: "Sprachausgabe:",
     settLblSpeed: "Sprachgeschwindigkeit:",
+    settLblVolume: "Sprachlautstärke:",
     settClose: "Speichern ⚙️",
     goTitle: "SPIEL VORBEI",
     goSubtitle: "Die Schutzschilde sind komplett zusammengebrochen!",
@@ -173,6 +177,7 @@ const TRANSLATIONS = {
     settLblSound: "Effets sonores:",
     settLblVoice: "Voix parlée:",
     settLblSpeed: "Vitesse de parole:",
+    settLblVolume: "Volume de parole:",
     settClose: "Enregistrer ⚙️",
     goTitle: "FIN DE PARTIE",
     goSubtitle: "Le bouclier de protection est entièrement déchargé !",
@@ -210,6 +215,7 @@ const TRANSLATIONS = {
     settLblSound: "Effetti sonori:",
     settLblVoice: "Sintesi vocale:",
     settLblSpeed: "Velocità voce:",
+    settLblVolume: "Volume voce:",
     settClose: "Salva ⚙️",
     goTitle: "PARTITA FINITA",
     goSubtitle: "Lo scudo provvidenziale si è esaurito completamente!",
@@ -227,6 +233,44 @@ const TRANSLATIONS = {
     levelSpeech: "Livello ",
     victoryTitle: "VITTORIA! 🏆",
     victorySubtitle: "Base spaziale salvata! Hai imparato con successo tutte le lettere e le parole!"
+  },
+  he: {
+    lblShield: "מגן",
+    lblScore: "ניקוד",
+    lblLevel: "שלב",
+    lblLevelSelect: "שלב התחלתי:",
+    startTitle: "מציל החלל",
+    startSubtitle: "הגן על בסיס החלל! פוצץ אסטרואידים על ידי הקלדת האותיות במקלדת. ללמוד זה כיף!",
+    startLblLang: "בחר שפה:",
+    startLblMode: "מצב משחק:",
+    practiceMode: "📚 אימון (ללא הפסד)",
+    arcadeMode: "🚀 ארקייד (על ניקוד)",
+    playBtn: "בואו נטוס! 🚀",
+    settTitle: "הגדרות",
+    settLblTheme: "עיצוב ויזואלי:",
+    settLblLang: "שפת לימוד:",
+    settLblMode: "מצב משחק:",
+    settLblSound: "אפקטים קוליים:",
+    settLblVoice: "הקראת אותיות:",
+    settLblSpeed: "מהירות דיבור:",
+    settLblVolume: "עוצמת דיבור:",
+    settClose: "שמור וסגור ⚙️",
+    goTitle: "המשחק נגמר",
+    goSubtitle: "מגן ההגנה התרוקן לחלוטין!",
+    goLblReachedScore: "ניקוד סופי:",
+    goLblReachedLevel: "שלב מקסימלי:",
+    restartBtn: "שחק שוב 🔄",
+    voiceOn: "פעיל",
+    voiceOff: "כבוי",
+    practiceName: "📚 אימון",
+    arcadeName: "🚀 ארקייד",
+    themeNeon: "ניאון 🌌",
+    themeCartoon: "מצויר 🧸",
+    themeRetro: "רטרו 📟",
+    levelUpText: "עלית שלב!",
+    levelSpeech: "שלב ",
+    victoryTitle: "ניצחון! 🏆",
+    victorySubtitle: "בסיס החלל ניצל! למדת בהצלחה את כל האותיות והמילים!"
   }
 };
 
@@ -385,6 +429,14 @@ class Game {
       audio.setSpeechRate(parseFloat(e.target.value));
     });
 
+    // Speech volume adjustments
+    const speechVolumeSlider = document.getElementById("sett-speech-volume");
+    if (speechVolumeSlider) {
+      speechVolumeSlider.addEventListener("input", (e) => {
+        audio.setSpeechVolume(parseFloat(e.target.value));
+      });
+    }
+
     // Sound switches
     document.querySelectorAll("#sett-sound-control button").forEach(btn => {
       btn.addEventListener("click", (e) => {
@@ -536,6 +588,8 @@ class Game {
     document.getElementById("sett-lbl-sound").innerText = dict.settLblSound;
     document.getElementById("sett-lbl-voice").innerText = dict.settLblVoice;
     document.getElementById("sett-lbl-speed").innerText = dict.settLblSpeed;
+    const settVolumeEl = document.getElementById("sett-lbl-volume");
+    if (settVolumeEl) settVolumeEl.innerText = dict.settLblVolume;
     document.getElementById("sett-btn-sound-on").innerText = dict.voiceOn;
     document.getElementById("sett-btn-sound-off").innerText = dict.voiceOff;
     document.getElementById("sett-btn-voice-on").innerText = dict.voiceOn;
@@ -594,6 +648,10 @@ class Game {
   setLanguage(langCode) {
     if (!LANGUAGE_DATA[langCode]) return;
     this.lang = langCode;
+    
+    // Dynamically update document direction and language code for RTL languages like Hebrew
+    document.documentElement.dir = (langCode === "he") ? "rtl" : "ltr";
+    document.documentElement.lang = langCode;
     
     // Clear typing locked target, words and lasers on screen when changing language mid-game
     this.typingTarget = null;
@@ -1130,6 +1188,10 @@ class Game {
     if (speechSlider) {
       speechSlider.value = audio.speechRate;
     }
+    const speechVolumeSlider = document.getElementById("sett-speech-volume");
+    if (speechVolumeSlider) {
+      speechVolumeSlider.value = audio.speechVolume;
+    }
     document.getElementById("settings-screen").classList.add("visible");
   }
 
@@ -1516,21 +1578,41 @@ class Game {
       const remainingText = text.substring(typedLength);
 
       const compWidth = this.ctx.measureText(completedText).width;
+      const remWidth = this.ctx.measureText(remainingText).width;
       let startX = ast.x - totalWidth / 2;
 
-      // Completed letters (green highlight)
-      this.ctx.fillStyle = this.theme === "retro" ? "#33ff33" : (this.theme === "cartoon" ? "#4cd137" : "#39ff14");
-      this.ctx.textAlign = "left";
-      if (this.theme === "neon") {
-        this.ctx.shadowColor = "#39ff14";
-        this.ctx.shadowBlur = 10;
-      }
-      this.ctx.fillText(completedText, startX, textY);
-      this.ctx.shadowBlur = 0;
+      if (this.lang === "he") {
+        // RTL drawing logic (completed letters are on the right, remaining on the left)
+        // 1. Remaining letters (white, left side)
+        this.ctx.fillStyle = "#ffffff";
+        this.ctx.textAlign = "left";
+        this.ctx.fillText(remainingText, startX, textY);
 
-      // Remaining letters
-      this.ctx.fillStyle = "#ffffff";
-      this.ctx.fillText(remainingText, startX + compWidth, textY);
+        // 2. Completed letters (green highlight, right side)
+        this.ctx.fillStyle = this.theme === "retro" ? "#33ff33" : (this.theme === "cartoon" ? "#4cd137" : "#39ff14");
+        this.ctx.textAlign = "left";
+        if (this.theme === "neon") {
+          this.ctx.shadowColor = "#39ff14";
+          this.ctx.shadowBlur = 10;
+        }
+        this.ctx.fillText(completedText, startX + remWidth, textY);
+        this.ctx.shadowBlur = 0;
+      } else {
+        // LTR drawing logic (completed letters are on the left, remaining on the right)
+        // 1. Completed letters (green highlight)
+        this.ctx.fillStyle = this.theme === "retro" ? "#33ff33" : (this.theme === "cartoon" ? "#4cd137" : "#39ff14");
+        this.ctx.textAlign = "left";
+        if (this.theme === "neon") {
+          this.ctx.shadowColor = "#39ff14";
+          this.ctx.shadowBlur = 10;
+        }
+        this.ctx.fillText(completedText, startX, textY);
+        this.ctx.shadowBlur = 0;
+
+        // 2. Remaining letters
+        this.ctx.fillStyle = "#ffffff";
+        this.ctx.fillText(remainingText, startX + compWidth, textY);
+      }
     } else {
       this.ctx.textAlign = "center";
       this.ctx.fillStyle = this.theme === "retro" ? ast.color || "#33ff33" : "#ffffff";
@@ -1743,7 +1825,7 @@ class Game {
     this.ctx.textAlign = "center";
     this.ctx.fillStyle = this.theme === "retro" ? "#33ff33" : (this.theme === "cartoon" ? "#ff3366" : "#00f0ff");
     
-    const warningText = this.lang === "ru" ? "⏳ ВРЕМЯ ЗАМЕДЛЕНО" : "⏳ TIME DILATED";
+    const warningText = this.lang === "ru" ? "⏳ ВРЕМЯ ЗАМЕДЛЕНО" : (this.lang === "he" ? "⏳ הזמן מואט" : "⏳ TIME DILATED");
     this.ctx.fillText(warningText, this.canvas.width / 2, this.canvas.height - 95);
 
     this.ctx.restore();

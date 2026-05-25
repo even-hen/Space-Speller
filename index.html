@@ -8,7 +8,7 @@
   <!-- Ensure mobile scaling fits viewport without scrolling -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Space Speller</title>
-  <link rel="stylesheet" href="styles.css?v=9">
+  <link rel="stylesheet" href="styles.css?v=11">
 </head>
 <body class="theme-neon">
 
@@ -200,6 +200,12 @@
             <span class="settings-label" id="sett-lbl-speed">Скорость речи:</span>
             <input type="range" id="sett-speech-speed" min="0.5" max="1.5" step="0.1" value="1.0">
           </div>
+
+          <!-- Voice Volume Range Slider -->
+          <div class="settings-row">
+            <span class="settings-label" id="sett-lbl-volume">Громкость речи:</span>
+            <input type="range" id="sett-speech-volume" min="0.0" max="1.0" step="0.1" value="0.8">
+          </div>
         </div>
 
         <button class="action-btn" id="btn-save-settings">Закрыть ⚙️</button>
@@ -230,8 +236,8 @@
   </div>
 
   <!-- Loading game assets -->
-  <script src="words.js?v=9"></script>
-  <script src="audio.js?v=9"></script>
-  <script src="game.js?v=9"></script>
+  <script src="words.js?v=11"></script>
+  <script src="audio.js?v=11"></script>
+  <script src="game.js?v=11"></script>
 </body>
 </html>

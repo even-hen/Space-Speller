@@ -10,6 +10,7 @@ class AudioEngine {
     this.voices = [];
     this.speechRate = 1.0; // Average speech speed by default
     this.speechPitch = 1.0;
+    this.speechVolume = 0.8; // Default pronunciation volume set to 0.8
     this.soundEnabled = true;
     this.voiceEnabled = true;
 
@@ -101,13 +102,15 @@ class AudioEngine {
             es: "es-ES",
             de: "de-DE",
             fr: "fr-FR",
-            it: "it-IT"
+            it: "it-IT",
+            he: "he-IL"
           };
           utterance.lang = langMap[langCode] || langCode;
         }
 
         utterance.rate = this.speechRate;
         utterance.pitch = this.speechPitch;
+        utterance.volume = this.speechVolume; // Apply selected volume
         
         window.speechSynthesis.speak(utterance);
       }, 10);
@@ -340,6 +343,13 @@ class AudioEngine {
    */
   setSpeechRate(rate) {
     this.speechRate = rate;
+  }
+
+  /**
+   * Sets TTS speech volume (0.0 to 1.0).
+   */
+  setSpeechVolume(volume) {
+    this.speechVolume = volume;
   }
 }
 
