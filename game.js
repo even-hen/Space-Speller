@@ -275,33 +275,33 @@ const TRANSLATIONS = {
 };
 
 const INVADER_MATRIX = [
-  [0,0,1,0,0,0,0,0,1,0,0],
-  [0,0,0,1,0,0,0,1,0,0,0],
-  [0,0,1,1,1,1,1,1,1,0,0],
-  [0,1,1,0,1,1,1,0,1,1,0],
-  [1,1,1,1,1,1,1,1,1,1,1],
-  [1,0,1,1,1,1,1,1,1,0,1],
-  [1,0,1,0,0,0,0,0,1,0,1],
-  [0,0,0,1,1,0,1,1,0,0,0]
+  [0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
+  [0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0],
+  [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1],
+  [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1],
+  [0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0]
 ];
 
 const RETRO_SHIP_MATRIX = [
-  [0,0,0,0,0,1,0,0,0,0,0],
-  [0,0,0,0,1,1,1,0,0,0,0],
-  [0,0,0,0,1,1,1,0,0,0,0],
-  [0,0,0,0,1,0,1,0,0,0,0],
-  [0,0,0,1,1,0,1,1,0,0,0],
-  [0,0,0,1,1,0,1,1,0,0,0],
-  [0,0,1,1,0,0,0,1,1,0,0],
-  [0,0,1,1,0,0,0,1,1,0,0],
-  [0,0,1,1,1,0,1,1,1,0,0],
-  [0,1,1,0,1,1,1,0,1,1,0],
-  [0,1,1,1,1,0,1,1,1,1,0],
-  [1,1,1,1,1,1,1,1,1,1,1],
-  [1,1,0,1,1,1,1,1,0,1,1],
-  [1,0,0,1,1,0,1,1,0,0,1],
-  [0,0,0,1,0,0,0,1,0,0,0],
-  [0,0,0,0,0,1,0,0,0,0,0]
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+  [0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0],
+  [0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0],
+  [0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0],
+  [0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0],
+  [0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0],
+  [0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0],
+  [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+  [1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1],
+  [1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 1],
+  [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
+  [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
 ];
 
 class Game {
@@ -311,18 +311,18 @@ class Game {
 
     // Game states: 'start', 'playing', 'settings', 'gameover'
     this.state = "start";
-    
+
     // Configurations
     this.theme = "neon";
     this.lang = this.detectUserLanguage();
     this.mode = "practice"; // 'practice' or 'arcade'
-    
+
     // Gameplay variables
     this.score = 0;
     this.level = 1;
     this.startLevel = 1; // User selectable starting level
     this.shield = 100;
-    
+
     // Letter hit frequency tracker (needs 5 hits per active letter to level up)
     this.letterHits = {};
     this.slowMotionFactor = 1.0; // Dynamic speed factor in practice mode
@@ -332,7 +332,7 @@ class Game {
     this.lasers = [];
     this.particles = [];
     this.stars = [];
-    
+
     // Spaceship settings
     this.ship = {
       x: 0,
@@ -445,7 +445,7 @@ class Game {
         audio.playClick();
         const active = e.target.getAttribute("data-sound") === "on";
         audio.toggleSound(active);
-        
+
         document.querySelectorAll("#sett-sound-control button").forEach(b => b.classList.remove("active"));
         e.target.classList.add("active");
       });
@@ -457,7 +457,7 @@ class Game {
         audio.playClick();
         const active = e.target.getAttribute("data-voice") === "on";
         audio.toggleVoice(active);
-        
+
         document.querySelectorAll("#sett-voice-control button").forEach(b => b.classList.remove("active"));
         e.target.classList.add("active");
       });
@@ -502,7 +502,7 @@ class Game {
     // Keyboard physical inputs listeners
     window.addEventListener("keydown", (e) => {
       if (this.state !== "playing") return;
-      
+
       const char = e.key.toUpperCase();
       // Allow alphabet characters based on language or accent markers
       if (char.length === 1 && char.match(/[\p{L}\p{M}]/u)) {
@@ -519,14 +519,14 @@ class Game {
       // Clear fuzzy canvas issue by setting real resolution matching the displayed pixel bounds
       this.canvas.width = this.canvas.clientWidth;
       this.canvas.height = this.canvas.clientHeight;
-      
+
       // Update ship positioning at bottom center
       this.ship.x = this.canvas.width / 2;
       this.ship.y = this.canvas.height - 35;
     };
 
     window.addEventListener("resize", resize);
-    
+
     // Quick delay to ensure keyboard container height has populated inside CSS flex loop
     setTimeout(resize, 100);
   }
@@ -573,7 +573,7 @@ class Game {
     document.getElementById("start-btn-practice").innerText = dict.practiceMode;
     document.getElementById("start-btn-arcade").innerText = dict.arcadeMode;
     document.getElementById("btn-start-game").innerText = dict.playBtn;
-    
+
     // Start Screen Themes
     const startThemeRetro = document.getElementById("start-theme-retro");
     if (startThemeRetro) startThemeRetro.innerText = dict.themeRetro;
@@ -625,7 +625,7 @@ class Game {
    */
   renderLanguageControls() {
     const parentIds = ["start-lang-control", "sett-lang-control"];
-    
+
     parentIds.forEach(id => {
       const container = document.getElementById(id);
       if (!container) return;
@@ -651,11 +651,11 @@ class Game {
   setLanguage(langCode) {
     if (!LANGUAGE_DATA[langCode]) return;
     this.lang = langCode;
-    
+
     // Dynamically update document direction and language code for RTL languages like Hebrew
     document.documentElement.dir = (langCode === "he") ? "rtl" : "ltr";
     document.documentElement.lang = langCode;
-    
+
     // Clear typing locked target, words and lasers on screen when changing language mid-game
     this.typingTarget = null;
     this.typedBuffer = "";
@@ -672,7 +672,7 @@ class Game {
    */
   setGameMode(mode) {
     this.mode = mode;
-    
+
     // Sync buttons active state
     document.querySelectorAll("#start-mode-control button, #sett-mode-control button").forEach(btn => {
       if (btn.getAttribute("data-mode") === mode) {
@@ -683,7 +683,7 @@ class Game {
     });
 
     this.updateHUDVisibility();
-    
+
     if (this.mode === "arcade") {
       this.shield = 100;
       this.updateShieldBar();
@@ -696,7 +696,7 @@ class Game {
   updateHUDVisibility() {
     const shieldEl = document.getElementById("hud-shield-panel");
     const scoreEl = document.getElementById("hud-score-panel");
-    
+
     if (this.mode === "practice") {
       if (shieldEl) shieldEl.style.display = "none";
       if (scoreEl) scoreEl.style.display = "none";
@@ -725,7 +725,7 @@ class Game {
       this.level = lvl;
       document.getElementById("level-val").innerText = this.level;
       this.initLevelLetterHits();
-      
+
       this.typingTarget = null;
       this.typedBuffer = "";
       this.asteroids = [];
@@ -741,7 +741,7 @@ class Game {
     this.theme = themeName;
     const container = document.getElementById("game-container");
     const body = document.body;
-    
+
     // Clear old theme body/containers
     body.className = `theme-${themeName}`;
     container.className = `theme-${themeName}`;
@@ -767,7 +767,7 @@ class Game {
     container.innerHTML = "";
 
     const layout = LANGUAGE_DATA[this.lang].keyboardLayout;
-    
+
     layout.forEach(row => {
       const rowDiv = document.createElement("div");
       rowDiv.className = "keyboard-row";
@@ -841,19 +841,19 @@ class Game {
     // If no target is currently locked, find a candidate asteroid
     if (!this.typingTarget) {
       const candidates = this.asteroids.filter(ast => ast.text.startsWith(char));
-      
+
       if (candidates.length > 0) {
         // Tie breaker: Lock onto the candidate lowest on the screen (closest threat!)
         candidates.sort((a, b) => b.y - a.y);
         this.typingTarget = candidates[0];
         this.typedBuffer = char;
-        
+
         // Highlight active visual key
         this.flashVirtualKey(char);
-        
+
         // Face ship towards target
         this.lockShipRotation(this.typingTarget);
-        
+
         // Core interaction handling: Single Letters vs Syllables/Words
         if (this.level === 1) {
           this.shootAndDestroyTarget();
@@ -873,7 +873,7 @@ class Game {
     } else {
       // Locked target exists: Check if input matches the NEXT character in spelling sequence
       const nextCharNeeded = this.typingTarget.text.charAt(this.typedBuffer.length);
-      
+
       if (char === nextCharNeeded) {
         this.typedBuffer += char;
         this.flashVirtualKey(char);
@@ -926,7 +926,7 @@ class Game {
     // Pronounce the word / syllable / letter
     audio.speak(target.text.toLowerCase(), this.lang);
     audio.playLaser();
-    
+
     // Apply recoil effect on spaceship
     this.ship.recoil = 8;
 
@@ -953,14 +953,14 @@ class Game {
 
     // Create particle debris
     const count = this.theme === "retro" ? 10 : 25;
-    const colors = this.theme === "cartoon" 
-      ? ["#ffd32a", "#ff9f43", "#ff6b6b", "#10ac84"] 
+    const colors = this.theme === "cartoon"
+      ? ["#ffd32a", "#ff9f43", "#ff6b6b", "#10ac84"]
       : (this.theme === "retro" ? ["#33ff33"] : ["#00f0ff", "#ff007f", "#ffffff"]);
 
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
       const speed = Math.random() * 4 + 1.5;
-      
+
       this.particles.push({
         x: ast.x,
         y: ast.y,
@@ -1004,7 +1004,7 @@ class Game {
    */
   triggerLevelUp() {
     this.level++;
-    
+
     // Victory End check: Capped at 7 levels
     if (this.level > 7) {
       this.triggerGameEnd(true);
@@ -1013,9 +1013,9 @@ class Game {
 
     // Slow down spawning briefly, display glowing banner overlay
     this.levelUpBannerTimer = 180; // 3 seconds at 60fps
-    
+
     audio.playLevelUp();
-    
+
     const dict = TRANSLATIONS[this.lang];
     audio.speak(dict.levelSpeech + this.level, this.lang);
 
@@ -1039,14 +1039,19 @@ class Game {
   spawnAsteroid() {
     const text = this.getSpellingContentForLevel();
     const radius = Math.max(22, text.length * 9 + 14);
-    
+
     // Avoid spawning off canvas borders
     const x = Math.random() * (this.canvas.width - radius * 2) + radius;
     const y = -radius;
 
     // Speed curve scales up with levels (gentler progression for kids)
-    const baseSpeed = 0.4 + this.level * 0.055;
-    const vy = Math.random() * 0.3 + baseSpeed;
+    let vy;
+    if (this.mode === "practice") {
+      vy = 0.4 + (2 * 0.05); // Constant speed matching Level 2
+    } else {
+      const baseSpeed = 0.4 + this.level * 0.055;
+      vy = Math.random() * 0.3 + baseSpeed;
+    }
 
     let astColor = "#33ff33";
     if (this.theme === "retro") {
@@ -1076,9 +1081,9 @@ class Game {
   getSpellingContentForLevel() {
     const data = LANGUAGE_DATA[this.lang];
     const vocabulary = data.levelWords[this.level - 1] || data.levelWords[data.levelWords.length - 1];
-    
+
     let totalWeight = 0;
-    
+
     // Map words to priority weights
     const weights = vocabulary.map(word => {
       let minHits = 5;
@@ -1112,7 +1117,7 @@ class Game {
     if (!key) return;
 
     key.classList.remove("pressed");
-    
+
     if (isError) {
       key.style.background = "#ff3838";
       key.style.color = "#ffffff";
@@ -1146,9 +1151,9 @@ class Game {
   updateShieldBar() {
     const bar = document.getElementById("shield-bar");
     if (!bar) return;
-    
+
     bar.style.width = `${this.shield}%`;
-    
+
     if (this.shield > 50) {
       bar.style.background = "var(--accent-success)";
     } else if (this.shield > 25) {
@@ -1165,7 +1170,7 @@ class Game {
     this.state = "playing";
     document.getElementById("start-screen").classList.remove("visible");
     this.buildVirtualKeyboard();
-    
+
     // Clear active buffers
     this.asteroids = [];
     this.particles = [];
@@ -1176,9 +1181,9 @@ class Game {
     this.spawnInterval = Math.max(2000, 3200 - this.level * 150);
     this.levelUpBannerTimer = 0;
     this.slowMotionFactor = 1.0;
-    
+
     this.initLevelLetterHits();
-    
+
     document.getElementById("score-val").innerText = "0000";
     document.getElementById("level-val").innerText = this.level;
     this.updateShieldBar();
@@ -1187,19 +1192,19 @@ class Game {
 
   openSettings() {
     this.state = "settings";
-    
+
     // Sync speech speed slider
     const speechSlider = document.getElementById("sett-speech-speed");
     if (speechSlider) {
       speechSlider.value = audio.speechRate;
     }
-    
+
     // Sync speech volume slider
     const speechVolumeSlider = document.getElementById("sett-speech-volume");
     if (speechVolumeSlider) {
       speechVolumeSlider.value = audio.speechVolume;
     }
-    
+
     // Sync theme buttons active state
     document.querySelectorAll("#sett-theme-control button").forEach(btn => {
       if (btn.getAttribute("data-theme") === this.theme) {
@@ -1263,7 +1268,7 @@ class Game {
    */
   triggerGameEnd(isVictory = false) {
     this.state = "gameover";
-    
+
     const dict = TRANSLATIONS[this.lang];
     const titleEl = document.getElementById("go-title");
     const subtitleEl = document.getElementById("go-subtitle");
@@ -1279,7 +1284,7 @@ class Game {
 
     document.getElementById("go-score-val").innerText = String(this.score).padStart(4, "0");
     document.getElementById("go-level-val").innerText = Math.min(7, this.level);
-    
+
     document.getElementById("game-over-screen").classList.add("visible");
   }
 
@@ -1302,7 +1307,7 @@ class Game {
     if (this.state === "playing") {
       this.update(elapsed);
     }
-    
+
     this.render();
 
     requestAnimationFrame((t) => this.loop(t));
@@ -1314,7 +1319,7 @@ class Game {
   update(elapsed) {
     // 0. Practice mode speed dampener (Slow Motion) based on closest threat proximity
     this.slowMotionFactor = 1.0;
-    
+
     if (this.mode === "practice" && this.asteroids.length > 0) {
       let lowestY = -999;
       this.asteroids.forEach(ast => {
@@ -1379,7 +1384,7 @@ class Game {
       // Handle ground collision: asteroid reaches bottom screen border
       if (ast.y - ast.radius > this.canvas.height) {
         this.asteroids.splice(idx, 1);
-        
+
         // Clear locked targets if they slip past the shield
         if (this.typingTarget === ast) {
           this.typingTarget = null;
@@ -1424,7 +1429,7 @@ class Game {
     // Draw Parallax Scrolling Stars
     this.stars.forEach(star => {
       const canvasX = (star.x / 500) * this.canvas.width;
-      
+
       if (this.theme === "cartoon") {
         // Twinkling cartoon bubbles/circles
         this.ctx.fillStyle = `rgba(255, 204, 0, ${0.4 + Math.sin(star.twinkle + this.lastTime * 0.003) * 0.3})`;
@@ -1442,7 +1447,7 @@ class Game {
     this.particles.forEach(p => {
       this.ctx.fillStyle = p.color;
       this.ctx.globalAlpha = p.life;
-      
+
       if (this.theme === "cartoon") {
         this.ctx.beginPath();
         this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
@@ -1453,7 +1458,7 @@ class Game {
           this.ctx.shadowColor = p.color;
           this.ctx.shadowBlur = 8;
         }
-        this.ctx.fillRect(p.x - p.size/2, p.y - p.size/2, p.size, p.size);
+        this.ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
         this.ctx.shadowBlur = 0;
       }
     });
@@ -1516,7 +1521,7 @@ class Game {
       // Cute wobble/sway effect as it falls
       const wobble = Math.sin(ast.y * 0.05) * 0.12;
       this.ctx.rotate(wobble);
-      
+
       // Draw pixel space invader
       const cols = 11;
       const rows = 8;
@@ -1524,7 +1529,7 @@ class Game {
       const invaderH = ast.radius * 1.1;
       const startX = -invaderW / 2;
       const startY = -invaderH / 2;
-      
+
       const px = invaderW / cols;
       const py = invaderH / rows;
 
@@ -1549,7 +1554,7 @@ class Game {
         this.ctx.fillStyle = grad;
         this.ctx.strokeStyle = "#ffffff";
         this.ctx.lineWidth = 4;
-        
+
         this.ctx.beginPath();
         const points = 7;
         for (let i = 0; i < points; i++) {
@@ -1563,14 +1568,14 @@ class Game {
         this.ctx.closePath();
         this.ctx.fill();
         this.ctx.stroke();
-      } 
+      }
       else {
         // Neon Cyberpunk glowing crystals
         this.ctx.shadowColor = "#ff007f";
         this.ctx.shadowBlur = 10;
         this.ctx.strokeStyle = "#ff007f";
         this.ctx.lineWidth = 3;
-        
+
         this.ctx.beginPath();
         const points = 6;
         const outerVerts = [];
@@ -1579,7 +1584,7 @@ class Game {
           const r = ast.radius * (1 + (i % 2 === 0 ? 0.12 : -0.08));
           const px = Math.cos(angle) * r;
           const py = Math.sin(angle) * r;
-          outerVerts.push({x: px, y: py});
+          outerVerts.push({ x: px, y: py });
           if (i === 0) this.ctx.moveTo(px, py);
           else this.ctx.lineTo(px, py);
         }
@@ -1606,7 +1611,7 @@ class Game {
    */
   renderAsteroidText(ast) {
     this.ctx.save();
-    
+
     // High legibility font selection
     const fontSize = this.theme === "retro" ? 18 : (this.theme === "cartoon" ? 22 : 19);
     const fontName = this.theme === "retro" ? "'Montserrat'" : (this.theme === "cartoon" ? "'Comfortaa'" : "'Montserrat'");
@@ -1623,7 +1628,7 @@ class Game {
     // Clear the background behind the text to ensure 100% legibility (crucial for retro mode saucer lines!)
     const padX = 7;
     const padY = 4;
-    
+
     const textY = this.theme === "retro" ? ast.y + ast.radius * 0.75 : ast.y;
 
     if (this.theme === "retro") {
@@ -1694,7 +1699,7 @@ class Game {
    */
   renderSpaceship() {
     this.ctx.save();
-    
+
     const recoilY = this.ship.y + this.ship.recoil;
     this.ctx.translate(this.ship.x, recoilY);
     this.ctx.rotate(this.ship.angle);
@@ -1719,34 +1724,34 @@ class Game {
           }
         }
       }
-    } 
+    }
     else if (this.theme === "cartoon") {
       this.ctx.fillStyle = "#ff3366";
       this.ctx.strokeStyle = "#ffffff";
       this.ctx.lineWidth = 4;
 
       this.ctx.beginPath();
-      this.ctx.moveTo(0, -this.ship.height/2);
-      this.ctx.quadraticCurveTo(this.ship.width/2, -10, this.ship.width/2, this.ship.height/2);
-      this.ctx.lineTo(-this.ship.width/2, this.ship.height/2);
-      this.ctx.quadraticCurveTo(-this.ship.width/2, -10, 0, -this.ship.height/2);
+      this.ctx.moveTo(0, -this.ship.height / 2);
+      this.ctx.quadraticCurveTo(this.ship.width / 2, -10, this.ship.width / 2, this.ship.height / 2);
+      this.ctx.lineTo(-this.ship.width / 2, this.ship.height / 2);
+      this.ctx.quadraticCurveTo(-this.ship.width / 2, -10, 0, -this.ship.height / 2);
       this.ctx.closePath();
       this.ctx.fill();
       this.ctx.stroke();
 
       this.ctx.fillStyle = "#ffcc00";
       this.ctx.beginPath();
-      this.ctx.moveTo(this.ship.width/2, 10);
-      this.ctx.lineTo(this.ship.width/2 + 12, this.ship.height/2);
-      this.ctx.lineTo(this.ship.width/2, this.ship.height/2);
+      this.ctx.moveTo(this.ship.width / 2, 10);
+      this.ctx.lineTo(this.ship.width / 2 + 12, this.ship.height / 2);
+      this.ctx.lineTo(this.ship.width / 2, this.ship.height / 2);
       this.ctx.closePath();
       this.ctx.fill();
       this.ctx.stroke();
 
       this.ctx.beginPath();
-      this.ctx.moveTo(-this.ship.width/2, 10);
-      this.ctx.lineTo(-this.ship.width/2 - 12, this.ship.height/2);
-      this.ctx.lineTo(-this.ship.width/2, this.ship.height/2);
+      this.ctx.moveTo(-this.ship.width / 2, 10);
+      this.ctx.lineTo(-this.ship.width / 2 - 12, this.ship.height / 2);
+      this.ctx.lineTo(-this.ship.width / 2, this.ship.height / 2);
       this.ctx.closePath();
       this.ctx.fill();
       this.ctx.stroke();
@@ -1760,12 +1765,12 @@ class Game {
       const flameHeight = 10 + Math.sin(this.lastTime * 0.04) * 5;
       this.ctx.fillStyle = "#ff9f43";
       this.ctx.beginPath();
-      this.ctx.moveTo(-10, this.ship.height/2);
-      this.ctx.lineTo(0, this.ship.height/2 + flameHeight);
-      this.ctx.lineTo(10, this.ship.height/2);
+      this.ctx.moveTo(-10, this.ship.height / 2);
+      this.ctx.lineTo(0, this.ship.height / 2 + flameHeight);
+      this.ctx.lineTo(10, this.ship.height / 2);
       this.ctx.closePath();
       this.ctx.fill();
-    } 
+    }
     else {
       this.ctx.shadowColor = "#00f0ff";
       this.ctx.shadowBlur = 12;
@@ -1774,11 +1779,11 @@ class Game {
       this.ctx.lineWidth = 3;
 
       this.ctx.beginPath();
-      this.ctx.moveTo(0, -this.ship.height/2 - 4);
-      this.ctx.lineTo(this.ship.width/2, this.ship.height/2);
-      this.ctx.lineTo(10, this.ship.height/4);
-      this.ctx.lineTo(-10, this.ship.height/4);
-      this.ctx.lineTo(-this.ship.width/2, this.ship.height/2);
+      this.ctx.moveTo(0, -this.ship.height / 2 - 4);
+      this.ctx.lineTo(this.ship.width / 2, this.ship.height / 2);
+      this.ctx.lineTo(10, this.ship.height / 4);
+      this.ctx.lineTo(-10, this.ship.height / 4);
+      this.ctx.lineTo(-this.ship.width / 2, this.ship.height / 2);
       this.ctx.closePath();
       this.ctx.fill();
       this.ctx.stroke();
@@ -1786,9 +1791,9 @@ class Game {
       this.ctx.strokeStyle = "#ff007f";
       this.ctx.shadowColor = "#ff007f";
       this.ctx.beginPath();
-      this.ctx.moveTo(-8, this.ship.height/4);
-      this.ctx.lineTo(0, this.ship.height/4 + 8 + Math.random() * 4);
-      this.ctx.lineTo(8, this.ship.height/4);
+      this.ctx.moveTo(-8, this.ship.height / 4);
+      this.ctx.lineTo(0, this.ship.height / 4 + 8 + Math.random() * 4);
+      this.ctx.lineTo(8, this.ship.height / 4);
       this.ctx.stroke();
       this.ctx.shadowBlur = 0;
     }
@@ -1802,7 +1807,7 @@ class Game {
   renderLevelUpBanner() {
     this.ctx.save();
     this.ctx.translate(this.canvas.width / 2, this.canvas.height / 2.5);
-    
+
     let scale = 1.0;
     if (this.levelUpBannerTimer > 150) {
       scale = (180 - this.levelUpBannerTimer) / 30;
@@ -1829,16 +1834,16 @@ class Game {
       this.ctx.strokeText(`${this.level}`, 0, 20);
       this.ctx.fillStyle = "#ffffff";
       this.ctx.fillText(`${this.level}`, 0, 20);
-    } 
+    }
     else if (this.theme === "retro") {
       this.ctx.fillStyle = "#33ff33";
       this.ctx.fillText(text, 0, -20);
       this.ctx.fillText(`LEVEL ${this.level}`, 0, 20);
-      
+
       this.ctx.strokeStyle = "#33ff33";
       this.ctx.lineWidth = 2;
       this.ctx.strokeRect(-160, -45, 320, 90);
-    } 
+    }
     else {
       this.ctx.shadowColor = "#00f0ff";
       this.ctx.shadowBlur = 20;
@@ -1860,20 +1865,20 @@ class Game {
     if (this.state !== "playing" || this.mode !== "practice" || !this.slowMotionFactor || this.slowMotionFactor > 0.95) return;
 
     this.ctx.save();
-    
+
     // Draw soft warning vignette
     const pulse = 0.22 + Math.sin(this.lastTime * 0.005) * 0.12;
-    
+
     const grad = this.ctx.createRadialGradient(
       this.canvas.width / 2, this.canvas.height / 2, this.canvas.height * 0.15,
       this.canvas.width / 2, this.canvas.height / 2, this.canvas.height * 0.75
     );
-    
+
     const color = this.theme === "retro" ? "rgba(51, 255, 51," : (this.theme === "cartoon" ? "rgba(255, 51, 102," : "rgba(0, 240, 255,");
-    
+
     grad.addColorStop(0, "rgba(0, 0, 0, 0)");
     grad.addColorStop(1, `${color} ${pulse})`);
-    
+
     this.ctx.fillStyle = grad;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -1882,7 +1887,7 @@ class Game {
     this.ctx.font = `bold 12px ${fontName}`;
     this.ctx.textAlign = "center";
     this.ctx.fillStyle = this.theme === "retro" ? "#33ff33" : (this.theme === "cartoon" ? "#ff3366" : "#00f0ff");
-    
+
     const warningText = this.lang === "ru" ? "⏳ ВРЕМЯ ЗАМЕДЛЕНО" : (this.lang === "he" ? "⏳ הזמן מואט" : "⏳ TIME DILATED");
     this.ctx.fillText(warningText, this.canvas.width / 2, this.canvas.height - 95);
 
