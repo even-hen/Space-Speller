@@ -1335,6 +1335,21 @@ class Game {
         // Slow down overall clock ticks to a minimum of 0.15x speed
         this.slowMotionFactor = 1.0 - ratio * 0.85;
       }
+
+      // Level 1 practice: dim keyboard rows with no relevant letters once asteroid
+      // crosses 1/3 of the slowing distance
+      if (this.level === 1) {
+        const threshold = startY + (endY - startY) * (1 / 3);
+        if (lowestY >= threshold) {
+          this._applyKeyboardRowDimming();
+        } else {
+          this._clearKeyboardRowDimming();
+        }
+      } else {
+        this._clearKeyboardRowDimming();
+      }
+    } else {
+      this._clearKeyboardRowDimming();
     }
 
     // Apply slow motion factors
@@ -1882,16 +1897,58 @@ class Game {
     this.ctx.fillStyle = grad;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Draw central warning text alert
-    const fontName = this.theme === "retro" ? "'Montserrat'" : (this.theme === "cartoon" ? "'Comfortaa'" : "'Montserrat'");
-    this.ctx.font = `bold 12px ${fontName}`;
-    this.ctx.textAlign = "center";
-    this.ctx.fillStyle = this.theme === "retro" ? "#33ff33" : (this.theme === "cartoon" ? "#ff3366" : "#00f0ff");
-
-    const warningText = this.lang === "ru" ? "⏳ ВРЕМЯ ЗАМЕДЛЕНО" : (this.lang === "he" ? "⏳ הזמן מואט" : "⏳ TIME DILATED");
-    this.ctx.fillText(warningText, this.canvas.width / 2, this.canvas.height - 95);
-
     this.ctx.restore();
+  }
+
+  /**
+   * Highlights the single keyboard row that contains the letter of the closest
+   * (lowest Y / nearest to ship) asteroid. All other rows are dimmed.
+   * Only active in Practice mode, Level 1, once the 1/3 threshold is crossed.
+   */
+  _applyKeyboardRowDimming() {
+    if (this.asteroids.length === 0) return;
+
+    // Find the asteroid closest to the ship (highest Y value)
+    let closestAst = this.asteroids[0];
+    this.asteroids.forEach(ast => {
+      if (ast.y > closestAst.y) closestAst = ast;
+    });
+
+    const targetLetter = closestAst.text[0].toUpperCase();
+
+    const container = document.getElementById("keyboard-container");
+    if (!container) return;
+
+    container.querySelectorAll(".keyboard-row").forEach(row => {
+      // Check if this specific row contains the closest asteroid's letter
+      const keys = row.querySelectorAll(".key");
+      let rowHasTarget = false;
+      keys.forEach(key => {
+        if ((key.innerText || "").toUpperCase() === targetLetter) {
+          rowHasTarget = true;
+        }
+      });
+
+      row.style.transition = "opacity 0.35s ease";
+      row.style.opacity = rowHasTarget ? "" : "0.28";
+    });
+  }
+
+  /**
+   * Restores full opacity on all keyboard rows (removes dimming).
+   */
+  _clearKeyboardRowDimming() {
+    const container = document.getElementById("keyboard-container");
+    if (!container) return;
+
+    // Only do DOM work if any row is currently dimmed (avoid unnecessary reflow)
+    const anyDimmed = container.querySelector(".keyboard-row[style*='opacity']");
+    if (!anyDimmed) return;
+
+    container.querySelectorAll(".keyboard-row").forEach(row => {
+      row.style.opacity = "";
+      row.style.transition = "opacity 0.4s ease";
+    });
   }
 }
 
